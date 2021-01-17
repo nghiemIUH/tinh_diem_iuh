@@ -1,5 +1,6 @@
 {% load static %}
 
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,13 +10,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tính điểm IUH</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+    {% comment %}
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+    {% endcomment %}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+    {% comment %} <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+    {% endcomment %}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="{% static 'css/select2.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/index.css' %}" />
+    <script src="{% static 'js/select2.min.js' %}"></script>
     <script src="{% static 'js/index.js' %}"></script>
+
     <!---->
 </head>
 
@@ -43,8 +50,8 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for i in row %}
-                    <tr id='1'>
+
+                    <tr>
                         <td>
                             <select name="select_mon-{{ i }}" id="{{ i }}">
                                 <option values="1">Môn học</option>
@@ -80,12 +87,13 @@
                             <input disabled type="text" id="he4-{{ i }}" />
                         </td>
                     </tr>
-                    {% endfor %}
+
                 </tbody>
             </table>
         </form>
 
     </div>
+    <button id="them" type="button">them</button>
 </body>
 
 </html>

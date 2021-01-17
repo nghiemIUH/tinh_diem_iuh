@@ -1,4 +1,64 @@
+function check() {
+    let a = document.getElementById('123').value
+    console.log(a)
+}
+
+
+let rowCount = 1
+
 $(document).ready(() => {
+    let ten_mon = $("select>option").map(function () {
+        return $(this).text();
+    });
+    let id_mon = $("select>option").map(function () {
+        return $(this).text();
+    });
+    let list_class = $("select>option").map(function () {
+        return $(this).attr('class');
+    });
+
+    $('#them').click(function () {
+        rowCount++
+        let row = $('<tr></tr>')
+        let select = $(`<select name="select_mon-${rowCount}" id="${rowCount}">`)
+        select.append(`<option values="${rowCount}">Môn học</option>`)
+        for (let i = 1; i < ten_mon.length; i++) {
+            select.append(`<option class="${list_class[i]}" value="${id_mon[i]}">${ten_mon[i]}</option>`)
+        }
+        row.append($('<td></td>').append(select))
+
+        for (let i = 1; i < 6; i++) {
+            row.append(`<td>
+                            <input type="text" name="tk${i}-${rowCount}" id="sm-tk${i}-${rowCount}" autocomplete="off" />
+                        </td>`)
+        }
+
+        row.append(`<td>
+                        <input type="text" name="gk-${rowCount}" id="sm-gk-${rowCount}" autocomplete="off" />
+                    </td>`)
+
+        for (let i = 1; i < 4; i++) {
+            row.append(`<td>
+                            <input type="text" name="th${i}-${rowCount}" class="sm-th-${rowCount}" autocomplete="off" />
+                        </td>`)
+        }
+
+        row.append(`<td>
+                        <input type="text" name="ck-${rowCount}" id="sm-ck-${rowCount}" autocomplete="off" />
+                    </td>`)
+
+        row.append(`<td>
+                        <input disabled type="text" id="he10-${rowCount}" />
+                    </td>`)
+        row.append(`<td>
+                        <input disabled type="text" id="he4-${rowCount}" />
+                    </td>`)
+
+        $('#table').append(row)
+        $("select").select2();
+    })
+
+
     $(function () {
         $("select").select2();
     });
