@@ -40,6 +40,7 @@ $(document).ready(() => {
     $("form").submit(function (e) {
         e.preventDefault();
         var serializedData = $(this).serialize();
+        console.log(serializedData)
         $.ajax({
             type: "POST",
             url: "",
@@ -64,9 +65,9 @@ $(document).ready(() => {
                 $(".container").append(result);
             },
             error: (err) => {
-                let id = err["responseJSON"]["error"];
-                $(`#he10-${id}`).val("");
-                $(`#he4-${id}`).val("");
+                // let id = err["responseJSON"]["error"];
+                // $(`#he10-${id}`).val("");
+                // $(`#he4-${id}`).val("");
             },
         });
     });
