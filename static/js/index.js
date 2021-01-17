@@ -2,6 +2,17 @@ $(document).ready(() => {
     $(function () {
         $("select").select2();
     });
+
+    $('select').change(function () {
+        $('input').val('')
+        let id = $(this).attr('id')
+        if ($('option:selected', this).attr('class') == 'False') {
+            $(`input[class='sm-th-${id}']`).prop('disabled', true)
+        } else {
+            $(`input[class='sm-th-${id}']`).prop('disabled', false)
+        }
+    })
+
     $('input[id^="sm-"]').change(function () {
         let point = $(this).val();
         let regex = new RegExp("^[0-9.]+$");
@@ -34,8 +45,6 @@ $(document).ready(() => {
             url: "",
             data: serializedData,
             success: (response) => {
-                console.log(response["error"]);
-
                 he10 = response["he10"];
                 he4 = response["he4"];
                 for (let i = 1; i < 11; i++) {

@@ -41,10 +41,9 @@ class Diem(View):
         i = 1
         try:
             for i in range(1, 11):
-                try:
-                    tin_chi = int(data[f'tin-chi-{i}'])
-                except:
-                    continue
+                id_monHoc = data[f'select_mon-{i}']
+                monHoc = models.MonHoc.objects.get(id=id_monHoc)
+                tin_chi = monHoc.tong_chi
                 tong_chi[i] = tin_chi
                 for j in range(1, 6):
                     try:
@@ -61,8 +60,8 @@ class Diem(View):
                     except:
                         print(f'error TH index {j}')
 
-                if(len(diemTH) > 0):
-                    chi_th = 1
+                if monHoc.thuc_hanh:
+                    chi_th = monHoc.chi_th
                     trung_binh_th = sum(diemTH)/len(diemTH)
                     trung_binh_lt = round((chi_th*trung_binh_th+trung_binh_lt *
                                            (tin_chi-chi_th))/tin_chi, 1)
@@ -91,8 +90,6 @@ class Diem(View):
                                    for i in range(len(tong_chi))])/sum(tong_chi), 1)
                 tb_4 = round(sum([tong_chi[i]*diem_he_4[i]
                                   for i in range(len(tong_chi))])/sum(tong_chi), 1)
-
-            return JsonResponse({'he10': diem_he_10, 'he4': diem_he_4, 'tb_10': tb_10, 'tb_4': tb_4})
+                return JsonResponse({'he10': diem_he_10, 'he4': diem_he_4, 'tb_10': tb_10, 'tb_4': tb_4})
         except:
-
             return JsonResponse({'error': i}, status=400)

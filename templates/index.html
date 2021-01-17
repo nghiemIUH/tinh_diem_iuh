@@ -46,9 +46,10 @@
                     {% for i in row %}
                     <tr>
                         <td>
-                            <select name="select_mon">
+                            <select name="select_mon-{{ i }}" id="{{ i }}">
+                                <option class="False" values=""></option>
                                 {% for m in monHoc %}
-                                <option value="{{ m.id }}">{{ m.ten }}</option>
+                                <option class="{{ m.thuc_hanh }}" value="{{ m.id }}">{{ m.ten }}</option>
                                 {% endfor %}
                             </select>
                         </td>
@@ -61,13 +62,13 @@
                             <input type="text" name="gk-{{ i }}" id="sm-gk-{{ i }}" autocomplete="off" />
                         </td>
                         <td>
-                            <input type="text" name="th1-{{ i }}" id="sm-th-{{ i }}" autocomplete="off" />
+                            <input type="text" name="th1-{{ i }}" class="sm-th-{{ i }}" autocomplete="off" />
                         </td>
                         <td>
-                            <input type="text" name="th2-{{ i }}" autocomplete="off" />
+                            <input type="text" name="th2-{{ i }}" class="sm-th-{{ i }}" autocomplete="off" />
                         </td>
                         <td>
-                            <input type="text" name="th3-{{ i }}" autocomplete="off" />
+                            <input type="text" name="th3-{{ i }}" class="sm-th-{{ i }}" autocomplete="off" />
                         </td>
                         <td>
                             <input type=" text" name="ck-{{ i }}" id="sm-ck-{{ i }}" autocomplete="off" />
