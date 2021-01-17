@@ -4,7 +4,7 @@ $(document).ready(() => {
     });
 
     $('select').change(function () {
-        $('input').val('')
+        $('input[type="text"]').val('')
         let id = $(this).attr('id')
         if ($('option:selected', this).attr('class') == 'False') {
             $(`input[class='sm-th-${id}']`).prop('disabled', true)
@@ -13,7 +13,8 @@ $(document).ready(() => {
         }
     })
 
-    $('input[id^="sm-"]').change(function () {
+    $('input[type="text"]').change(function () {
+        // console.log(1)
         let point = $(this).val();
         let regex = new RegExp("^[0-9.]+$");
         let regex_class = new RegExp("^sm-tin-chi-.+$");
@@ -40,7 +41,6 @@ $(document).ready(() => {
     $("form").submit(function (e) {
         e.preventDefault();
         var serializedData = $(this).serialize();
-        console.log(serializedData)
         $.ajax({
             type: "POST",
             url: "",
@@ -52,6 +52,9 @@ $(document).ready(() => {
                     if (he10[i] != 0) {
                         $(`#he10-${i}`).val(he10[i]);
                         $(`#he4-${i}`).val(he4[i]);
+                    } else {
+                        $(`#he10-${i}`).val('');
+                        $(`#he4-${i}`).val('');
                     }
                 }
                 $(".result").remove();

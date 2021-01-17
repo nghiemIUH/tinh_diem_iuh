@@ -44,10 +44,10 @@
                 </thead>
                 <tbody>
                     {% for i in row %}
-                    <tr>
+                    <tr id='1'>
                         <td>
                             <select name="select_mon-{{ i }}" id="{{ i }}">
-                                {% comment %} <option values="1">Môn học</option> {% endcomment %}
+                                <option values="1">Môn học</option>
                                 {% for m in monHoc %}
                                 <option class="{{ m.thuc_hanh }}" value="{{ m.id }}">{{ m.ten }}</option>
                                 {% endfor %}
@@ -71,7 +71,7 @@
                             <input type="text" name="th3-{{ i }}" class="sm-th-{{ i }}" autocomplete="off" />
                         </td>
                         <td>
-                            <input type=" text" name="ck-{{ i }}" id="sm-ck-{{ i }}" autocomplete="off" />
+                            <input type="text" name="ck-{{ i }}" id="sm-ck-{{ i }}" autocomplete="off" />
                         </td>
                         <td>
                             <input disabled type="text" id="he10-{{ i }}" />

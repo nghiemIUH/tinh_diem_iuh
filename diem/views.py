@@ -39,9 +39,11 @@ class Diem(View):
         diemTK = []
         diemTH = []
         i = 1
+
         try:
             for i in range(1, 11):
                 id_monHoc = data[f'select_mon-{i}']
+
                 monHoc = models.MonHoc.objects.get(id=id_monHoc)
                 tin_chi = monHoc.tong_chi
                 tong_chi[i] = tin_chi
@@ -51,16 +53,19 @@ class Diem(View):
                     except:
                         pass
                 trung_binh_tk = sum(diemTK)/len(diemTK)
+
                 gk = float(data[f'gk-{i}'])
+
                 ck = float(data[f'ck-{i}'])
+                print(ck)
                 trung_binh_lt = round(trung_binh_tk*0.2+gk*0.3 + ck*0.5, 1)
-                for j in range(1, 4):
-                    try:
-                        diemTH.append(float(data[f'th{j}-{i}']))
-                    except:
-                        print(f'error TH index {j}')
 
                 if monHoc.thuc_hanh:
+                    for j in range(1, 4):
+                        try:
+                            diemTH.append(float(data[f'th{j}-{i}']))
+                        except:
+                            print(f'error TH index {j}')
                     chi_th = monHoc.chi_th
                     trung_binh_th = sum(diemTH)/len(diemTH)
                     trung_binh_lt = round((chi_th*trung_binh_th+trung_binh_lt *

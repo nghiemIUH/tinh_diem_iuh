@@ -1,39 +1,44 @@
-.container{
+.container {
     padding-top: 1.5vw;
 }
-.title{
-    margin:  auto;
+
+.title {
+    margin: auto;
     width: 50%;
     color: red;
 }
 
-input{
+input {
     border: 0.5px lightgray solid;
     width: 100%;
     border-radius: 10%;
 }
-.size-width{
+
+select {
+    width: 20vw;
+}
+
+.size-width {
     width: 7%;
 }
+
 .th {
     text-align: center;
 }
 
-h1{
+h1 {
     font-size: 3vw;
 }
-th, td{
+
+th,
+td {
     font-size: 1.2vw;
 }
-input[type="checkbox"]{
-    height: 1.7vw;
-    cursor: pointer;
-}
 
-.result{
+.result {
     margin-top: 2vw;
 }
 
-h5{
+h5 {
     font-size: 1.5vw;
 }
