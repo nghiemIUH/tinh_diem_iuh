@@ -1,4 +1,7 @@
 $(document).ready(() => {
+    $(function () {
+        $("select").select2();
+    });
     $('input[id^="sm-"]').change(function () {
         let point = $(this).val();
         let regex = new RegExp("^[0-9.]+$");

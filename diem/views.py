@@ -11,11 +11,25 @@ class ViewMonHoc(View):
         monhoc = models.MonHoc.objects.all()
         return render(request, 'them_mon_hoc.html', {'monhoc': monhoc})
 
+    def post(self, request):
+        data = request.POST
+        ten = data['ten']
+        thuc_hanh = 'on' in data.getlist('thuc_hanh')
+        tong_chi = int(data['tong_chi'])
+        chi_th = 0
+        if thuc_hanh:
+            chi_th = int(data['chi_th'])
+        monHoc = models.MonHoc(
+            ten=ten, thuc_hanh=thuc_hanh, tong_chi=tong_chi, chi_th=chi_th)
+        monHoc.save()
+        return JsonResponse({'ten': ten, 'thuc_hanh': thuc_hanh, 'tong_chi': tong_chi, 'chi_th': chi_th})
+
 
 class Diem(View):
 
     def get(self, request):
-        return render(request, 'index.html', {'row': [i for i in range(1, 11)]})
+        monHoc = models.MonHoc.objects.all()
+        return render(request, 'index.html', {'row': [i for i in range(1, 11)], 'monHoc': monHoc})
 
     def post(self, request):
         data = request.POST
@@ -49,10 +63,6 @@ class Diem(View):
 
                 if(len(diemTH) > 0):
                     chi_th = 1
-                    # if tin_chi == 3:
-                    #     chi_th = 1
-                    # if tin_chi == 4:
-                    #     chi_th = 2
                     trung_binh_th = sum(diemTH)/len(diemTH)
                     trung_binh_lt = round((chi_th*trung_binh_th+trung_binh_lt *
                                            (tin_chi-chi_th))/tin_chi, 1)

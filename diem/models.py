@@ -6,5 +6,5 @@ from django.db import models
 class MonHoc(models.Model):
     ten = models.CharField(max_length=200, unique=True)
     thuc_hanh = models.BooleanField(default=False)
-    chi_ly_thuyet = models.IntegerField()
-    chi_thuc_hanh = models.IntegerField(default=0, blank=True)
+    tong_chi = models.IntegerField()
+    chi_th = models.IntegerField(default=0, blank=True)

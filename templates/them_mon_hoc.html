@@ -1,50 +1,87 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Document</title>
-        <link
-            rel="stylesheet"
-            href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-        />
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    </head>
 
-    <body>
-        <div class="container">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Tên môn học</th>
-                        <th>Thực hành</th>
-                        <th>Chỉ lý thuyết</th>
-                        <th>Chỉ thực hành</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for i in monhoc %}
-                    <tr>
-                        <td>{{ i.ten }}</td>
-                        <td>{{ i.thuc_hanh }}</td>
-                        <td>{{ i.chi_ly_thuyet }}</td>
-                        <td>{{ i.chi_thuc_hanh }}</td>
-                    </tr>
-                    {% endfor %}
+<head>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="{% static 'image/score.svg' %}" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quản lý môn học</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="{% static 'js/them_mon_hoc.js' %}"></script>
+</head>
 
-                    <tr>
-                        <form action="">
-                            <td><input type="text" /></td>
-                            <td><input type="checkbox" /></td>
-                            <td><input type="text" /></td>
-                            <td><input type="text" value="" /></td>
+<body>
+    <div class="container">
+        <!-- Modal -->
+        <div class="modal fade" id="modelId" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Modal title</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="" method='post' id='form_mh'>
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label>Tên môn học:</label>
+                                <input type="text" class="form-control" placeholder="Tên môn học" name='ten'
+                                    autocomplete="off">
+                            </div>
+                            <div class="form-group">
+                                <label>Tổng chỉ:</label>
+                                <input type="text" class="form-control" placeholder="Chỉ lý thuyết" name='tong_chi'>
+                            </div>
+                            <div class="form-group form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" type="checkbox" name='thuc_hanh' autocomplete="off">
+                                    Thực hành
+                                </label>
+                            </div>
+                            <div class="form-group">
+                                <label>Chỉ thực hành:</label>
+                                <input type="text" class="form-control" placeholder="Chỉ thực hành" name='chi_th'
+                                    autocomplete="off">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Thêm</button>
                         </form>
-                    </tr>
-                </tbody>
-            </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
         </div>
-    </body>
+
+        <table class="table" id="tb_monHoc">
+            <thead>
+                <tr>
+                    <th>Tên môn học</th>
+                    <th>Thực hành</th>
+                    <th>Chỉ lý thuyết</th>
+                    <th>Chỉ thực hành</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in monhoc %}
+                <tr id="{{ i.id }}">
+                    <td>{{ i.ten }}</td>
+                    <td>{{ i.thuc_hanh }}</td>
+                    <td>{{ i.tong_chi }}</td>
+                    <td>{{ i.chi_th }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modelId">Thêm</button>
+    </div>
+</body>
+
 </html>
