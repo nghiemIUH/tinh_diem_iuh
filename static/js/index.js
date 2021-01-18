@@ -91,8 +91,6 @@ $(document).ready(() => {
         })
     })
 
-
-
     $(document).on('change', 'input[type="text"]', function () {
         let point = $(this).val();
         let regex = new RegExp("^[0-9.]+$");
@@ -128,8 +126,12 @@ $(document).ready(() => {
             if (diem != '')
                 list_tk.push(parseFloat(diem))
         }
-        if (list_tk.length == 0)
+        if (list_tk.length == 0) {
+            $(`input[id=he10-${row}]`).val('')
+            $(`input[id=he4-${row}]`).val('')
             return
+        }
+
         let trung_binh_tk = list_tk.reduce(function (a, b) {
             return a + b
         }, 0) / list_tk.length
@@ -137,17 +139,24 @@ $(document).ready(() => {
         gk = $(`input[name='gk-${row}']`).val()
         if (gk != '')
             gk = parseFloat(gk)
-        else
+        else {
+            $(`input[id=he10-${row}]`).val('')
+            $(`input[id=he4-${row}]`).val('')
             return
+        }
+
 
         ck = $(`input[name='ck-${row}']`).val()
         if (ck != '')
             ck = parseFloat(ck)
-        else
+        else {
+            $(`input[id=he10-${row}]`).val('')
+            $(`input[id=he4-${row}]`).val('')
             return
+        }
+
 
         let trung_binh = (trung_binh_tk * 20 + gk * 30 + ck * 50) / 100
-
 
         if (monHoc['thuc_hanh']) {
             let list_th = []
@@ -155,15 +164,17 @@ $(document).ready(() => {
                 let diem = $(`input[name='th${i}-${row}']`).val()
                 if (diem != '')
                     list_th.push(parseFloat(diem))
-
             }
-            if (list_th.length == 0)
+            if (list_th.length == 0) {
+                $(`input[id=he10-${row}]`).val('')
+                $(`input[id=he4-${row}]`).val('')
                 return
+            }
             let trung_binh_th = list_th.reduce(function (a, b) {
                 return a + b
             }, 0) / list_th.length
 
-            trung_binh = (trung_binh_th * data['chi_th'] + trung_binh * (data['tong_chi'] - data['chi_th'])) / data['tong_chi']
+            trung_binh = (trung_binh_th * monHoc['chi_th'] + trung_binh * (monHoc['tong_chi'] - monHoc['chi_th'])) / monHoc['tong_chi']
             console.log(trung_binh)
         }
         $(`input[id=he10-${row}]`).val(trung_binh)
@@ -190,6 +201,10 @@ $(document).ready(() => {
         else
             diem = 0
         return diem
+    }
+
+    function tinhDiemTB() {
+
     }
 
 });
