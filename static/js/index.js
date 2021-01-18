@@ -14,7 +14,7 @@ $(document).ready(() => {
         rowCount++
         let row = $(`<tr id="${rowCount}"></tr>`)
         let select = $(`<select id="select_mon-${rowCount}" >`)
-        select.append(`<option values="${rowCount}">Môn học</option>`)
+        select.append(`<option class="False" values="${rowCount}">Môn học</option>`)
         for (let i = 1; i < ten_mon.length; i++) {
             select.append(`<option class="${list_class[i]}" value="${id_mon[i]}">${ten_mon[i]}</option>`)
         }
@@ -32,7 +32,7 @@ $(document).ready(() => {
 
         for (let i = 1; i < 4; i++) {
             row.append(`<td>
-                            <input type="text" name="th${i}-${rowCount}" class="sm-${rowCount} sm-th-${rowCount}" autocomplete="off" />
+                            <input type="text" name="th${i}-${rowCount}" class="sm-${rowCount}-th" autocomplete="off" />
                         </td>`)
         }
 
@@ -85,13 +85,12 @@ $(document).ready(() => {
 
     $(document).on('change', 'select', function () {
         let id = $(this).parent().parent().attr('id')
-        $(`input[class='sm-${id}']`).val('')
+        $(`input[class^='sm-${id}']`).val('')
         if ($('option:selected', this).attr('class') == 'False') {
-            $(`input[class='sm-th-${id}']`).prop('disabled', true)
+            $(`input[class='sm-${id}-th']`).prop('disabled', true)
         } else {
-            $(`input[class='sm-th-${id}']`).prop('disabled', false)
+            $(`input[class='sm-${id}-th']`).prop('disabled', false)
         }
-        console.log(id)
 
         let id_mon_hoc = $(`#select_mon-${id} option:selected`).val();
         getMonHoc(id_mon_hoc)
@@ -99,27 +98,6 @@ $(document).ready(() => {
     })
 
     $(document).on('change', 'input[type="text"]', function () {
-        let point = $(this).val();
-        let regex = new RegExp("^[0-9.]+$");
-        let regex_class = new RegExp("^sm-tin-chi-.+$");
-        if (point == "") {
-            $(this).css("border-color", "lightgray");
-        } else if (point == ".") {
-            $(this).css("border-color", "red");
-        } else if (regex.test(point)) {
-            $(this).css("border-color", "black");
-            if (
-                point <= 5 ||
-                (point > 10 && !regex_class.test($(this).attr("id")))
-            ) {
-                $(this).css("color", "red");
-            } else {
-                $(this).css("color", "black");
-            }
-        } else {
-            $(this).css("border-color", "red");
-        }
-
         let row = $(this).parent().parent().attr('id')
         getMonHoc()
         tinh_diem(row)

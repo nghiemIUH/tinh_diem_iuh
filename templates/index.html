@@ -45,7 +45,7 @@
                 <tr id="1">
                     <td>
                         <select id="select_mon-1">
-                            <option values="1">Môn học</option>
+                            <option class="False" values="1">Môn học</option>
                             {% for m in monHoc %}
                             <option class="{{ m.thuc_hanh }}" value="{{ m.id }}">{{ m.ten }}</option>
                             {% endfor %}
@@ -60,13 +60,13 @@
                         <input type="text" name="gk-1" class="sm-1" autocomplete="off">
                     </td>
                     <td>
-                        <input type="text" name="th1-1" class="sm-1 sm-th-1" autocomplete="off">
+                        <input type="text" name="th1-1" class="sm-1-th" autocomplete="off">
                     </td>
                     <td>
-                        <input type="text" name="th2-1" class="sm-1 sm-th-1" autocomplete="off">
+                        <input type="text" name="th2-1" class="sm-1-th" autocomplete="off">
                     </td>
                     <td>
-                        <input type="text" name="th3-1" class="sm-1 sm-th-1" autocomplete="off">
+                        <input type="text" name="th3-1" class="sm-1-th" autocomplete="off">
                     </td>
                     <td>
                         <input type="text" name="ck-1" class="sm-1" autocomplete="off">
