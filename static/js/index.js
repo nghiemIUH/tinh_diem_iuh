@@ -22,29 +22,29 @@ $(document).ready(() => {
 
         for (let i = 1; i < 6; i++) {
             row.append(`<td>
-                            <input type="text" name="tk${i}-${rowCount}" id="sm-tk${i}-${rowCount}" autocomplete="off" />
+                            <input type="text" name="tk${i}-${rowCount}" class="sm-${rowCount}" autocomplete="off" />
                         </td>`)
         }
 
         row.append(`<td>
-                        <input type="text" name="gk-${rowCount}" id="sm-gk-${rowCount}" autocomplete="off" />
+                        <input type="text" name="gk-${rowCount}" class="sm-${rowCount}" autocomplete="off" />
                     </td>`)
 
         for (let i = 1; i < 4; i++) {
             row.append(`<td>
-                            <input type="text" name="th${i}-${rowCount}" class="sm-th-${rowCount}" autocomplete="off" />
+                            <input type="text" name="th${i}-${rowCount}" class="sm-${rowCount} sm-th-${rowCount}" autocomplete="off" />
                         </td>`)
         }
 
         row.append(`<td>
-                        <input type="text" name="ck-${rowCount}" id="sm-ck-${rowCount}" autocomplete="off" />
+                        <input type="text" name="ck-${rowCount}" class="sm-${rowCount}" autocomplete="off" />
                     </td>`)
 
         row.append(`<td>
-                        <input disabled type="text" id="he10-${rowCount}" />
+                        <input disabled type="text" id="he10-${rowCount}" class="sm-${rowCount}"/>
                     </td>`)
         row.append(`<td>
-                        <input disabled type="text" id="he4-${rowCount}" />
+                        <input disabled type="text" id="he4-${rowCount}" class="sm-${rowCount}"/>
                     </td>`)
 
         $('#table').append(row)
@@ -73,22 +73,29 @@ $(document).ready(() => {
     const csrftoken = getCookie('csrftoken');
     let monHoc = 0
 
-    $(document).on('change', 'select', function () {
-        $('input[type="text"]').val('')
-        let id = $(this).parent().parent().attr('id')
-        if ($('option:selected', this).attr('class') == 'False') {
-            $(`input[class='sm-th-${id}']`).prop('disabled', true)
-        } else {
-            $(`input[class='sm-th-${id}']`).prop('disabled', false)
-        }
-        let url = window.location.href
-        let id_mon_hoc = $(`#select_mon-${id} option:selected`).val();
-        $.post(`${url}get-mon-hoc/`, {
+    function getMonHoc(id_mon_hoc) {
+        let url = window.location.href + 'get-mon-hoc/'
+        $.post(url, {
             'id': id_mon_hoc,
             'csrfmiddlewaretoken': csrftoken
         }, function (data) {
             monHoc = data
         })
+    }
+
+    $(document).on('change', 'select', function () {
+        let id = $(this).parent().parent().attr('id')
+        $(`input[class='sm-${id}']`).val('')
+        if ($('option:selected', this).attr('class') == 'False') {
+            $(`input[class='sm-th-${id}']`).prop('disabled', true)
+        } else {
+            $(`input[class='sm-th-${id}']`).prop('disabled', false)
+        }
+        console.log(id)
+
+        let id_mon_hoc = $(`#select_mon-${id} option:selected`).val();
+        getMonHoc(id_mon_hoc)
+
     })
 
     $(document).on('change', 'input[type="text"]', function () {
@@ -114,6 +121,7 @@ $(document).ready(() => {
         }
 
         let row = $(this).parent().parent().attr('id')
+        getMonHoc()
         tinh_diem(row)
     });
 
@@ -179,6 +187,7 @@ $(document).ready(() => {
         }
         $(`input[id=he10-${row}]`).val(trung_binh)
         $(`input[id=he4-${row}]`).val(chuyen10Sang4(trung_binh))
+        tinhDiemTB()
     }
 
     function chuyen10Sang4(diem) {
@@ -204,7 +213,25 @@ $(document).ready(() => {
     }
 
     function tinhDiemTB() {
+        let tong_10 = 0;
+        let tong_4 = 0;
+        let tong_chi = 0
+        for (let i = 1; i <= rowCount; i++) {
+            let diem_10 = $(`input[id=he10-${i}]`).val()
+            if (diem_10 != '') {
+                getMonHoc()
+                tong_chi += monHoc['tong_chi']
+                tong_10 += parseFloat(diem_10) * monHoc['tong_chi']
+                tong_4 += parseFloat($(`input[id=he4-${i}]`).val()) * monHoc['tong_chi']
+            }
+        }
+        tong_10 = tong_10 / tong_chi
+        tong_4 = tong_4 / tong_chi
+        if (tong_10 != 0) {
+            $('.container').append(`<h4>Trung bình chung hệ 10: ${tong_10}</h4>`)
+            $('.container').append(`<h4>Trung bình chung hệ 4: ${tong_4}</4>`)
 
+        }
     }
 
 });
