@@ -16,6 +16,7 @@ input {
 
 select {
     width: 20vw;
+
 }
 
 .size-width {
@@ -45,5 +46,9 @@ h5 {
 
 button {
     font-size: 1.2vw;
+    margin-top: 20px;
+}
+
+#result {
     margin-top: 20px;
 }

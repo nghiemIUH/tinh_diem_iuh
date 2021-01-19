@@ -4,21 +4,23 @@ from django.http import JsonResponse
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.views import APIView
+from django.http import HttpResponseRedirect
 from . import serializer
 from . import models
 # Create your views here.
 
 
-class ViewMonHoc(View):
+class ViewMonHoc(APIView):
 
     def get(self, request):
         monhoc = models.MonHoc.objects.all()
         return render(request, 'them_mon_hoc.html', {'monhoc': monhoc})
 
     def post(self, request):
-        data = request.POST
+        data = request.data
+        print(data)
         ten = data['ten']
-        thuc_hanh = 'on' in data.getlist('thuc_hanh')
+        thuc_hanh = 'on' == data['thuc_hanh']
         tong_chi = int(data['tong_chi'])
         chi_th = 0
         if thuc_hanh:
@@ -39,7 +41,10 @@ class Diem(View):
 class APIMonHoc(APIView):
 
     def post(self, request):
-        id_mon_hoc = request.data['id']
-        monHoc = models.MonHoc.objects.get(id=id_mon_hoc)
-        data = serializer.MonHocSerializer(monHoc).data
-        return Response(data, status=status.HTTP_200_OK)
+        try:
+            id_mon_hoc = request.data['id']
+            monHoc = models.MonHoc.objects.get(id=id_mon_hoc)
+            data = serializer.MonHocSerializer(monHoc).data
+            return Response(data, status=status.HTTP_200_OK)
+        except:
+            return Response(status=status.HTTP_400_BAD_REQUEST)

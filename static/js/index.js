@@ -78,7 +78,7 @@ $(document).ready(() => {
         $.post(url, {
             'id': id_mon_hoc,
             'csrfmiddlewaretoken': csrftoken
-        }, function (data) {
+        }, function (data, status) {
             monHoc = data
         })
     }
@@ -98,10 +98,25 @@ $(document).ready(() => {
     })
 
     $(document).on('change', 'input[type="text"]', function () {
+
+        // regex
+        let reg = new RegExp('([0-9]+)(\.?)([0-9]?)')
+        let value = $(this).val()
+        if (reg.test(value)) {
+            $(this).css('color', 'black')
+        } else {
+            $(this).css('color', 'red')
+        }
+
+        // ----------------------------------------------
         let row = $(this).parent().parent().attr('id')
         getMonHoc()
         tinh_diem(row)
     });
+
+    $(document).on('blur', 'input[type="text"]', function () {
+
+    })
 
     function tinh_diem(row) {
         let list_tk = []
@@ -141,7 +156,6 @@ $(document).ready(() => {
             return
         }
 
-
         let trung_binh = (trung_binh_tk * 20 + gk * 30 + ck * 50) / 100
 
         if (monHoc['thuc_hanh']) {
@@ -160,8 +174,7 @@ $(document).ready(() => {
                 return a + b
             }, 0) / list_th.length
 
-            trung_binh = (trung_binh_th * monHoc['chi_th'] + trung_binh * (monHoc['tong_chi'] - monHoc['chi_th'])) / monHoc['tong_chi']
-            console.log(trung_binh)
+            trung_binh = ((trung_binh_th * monHoc['chi_th'] + trung_binh * (monHoc['tong_chi'] - monHoc['chi_th'])) / monHoc['tong_chi']).toFixed(1)
         }
         $(`input[id=he10-${row}]`).val(trung_binh)
         $(`input[id=he4-${row}]`).val(chuyen10Sang4(trung_binh))
@@ -203,11 +216,14 @@ $(document).ready(() => {
                 tong_4 += parseFloat($(`input[id=he4-${i}]`).val()) * monHoc['tong_chi']
             }
         }
-        tong_10 = tong_10 / tong_chi
-        tong_4 = tong_4 / tong_chi
+        tong_10 = (tong_10 / tong_chi).toFixed(1)
+        tong_4 = (tong_4 / tong_chi).toFixed(2)
+        $('#result').remove()
+        let result = $('<div id="result" ></div>')
         if (tong_10 != 0) {
-            $('.container').append(`<h4>Trung bình chung hệ 10: ${tong_10}</h4>`)
-            $('.container').append(`<h4>Trung bình chung hệ 4: ${tong_4}</4>`)
+            result.append(`<h4>Trung bình chung hệ 10: ${tong_10}</h4>`)
+            result.append(`<h4>Trung bình chung hệ 4: ${tong_4}</4>`)
+            $('.container').append(result)
 
         }
     }

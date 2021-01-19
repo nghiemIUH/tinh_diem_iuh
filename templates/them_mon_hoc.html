@@ -28,30 +28,25 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form action="" method='post' id='form_mh'>
-                            {% csrf_token %}
-                            <div class="form-group">
-                                <label>Tên môn học:</label>
-                                <input type="text" class="form-control" placeholder="Tên môn học" name='ten'
-                                    autocomplete="off">
-                            </div>
-                            <div class="form-group">
-                                <label>Tổng chỉ:</label>
-                                <input type="text" class="form-control" placeholder="Chỉ lý thuyết" name='tong_chi'>
-                            </div>
-                            <div class="form-group form-check">
-                                <label class="form-check-label">
-                                    <input class="form-check-input" type="checkbox" name='thuc_hanh' autocomplete="off">
-                                    Thực hành
-                                </label>
-                            </div>
-                            <div class="form-group">
-                                <label>Chỉ thực hành:</label>
-                                <input type="text" class="form-control" placeholder="Chỉ thực hành" name='chi_th'
-                                    autocomplete="off">
-                            </div>
-                            <button type="submit" class="btn btn-primary">Thêm</button>
-                        </form>
+                        <div class="form-group">
+                            <label>Tên môn học:</label>
+                            <input type="text" class="form-control" placeholder="Tên môn học" name='ten'>
+                        </div>
+                        <div class="form-group">
+                            <label>Tổng chỉ:</label>
+                            <input type="text" class="form-control" placeholder="Tổng chỉ" name='tong_chi'>
+                        </div>
+                        <div class="form-group form-check">
+                            <label class="form-check-label">
+                                <input class="form-check-input" type="checkbox" name='thuc_hanh' autocomplete="off">
+                                Thực hành
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label>Chỉ thực hành:</label>
+                            <input type="text" class="form-control" placeholder="Chỉ thực hành" name='chi_th'>
+                        </div>
+                        <button type="button" id="them" class="btn btn-primary">Thêm</button>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
