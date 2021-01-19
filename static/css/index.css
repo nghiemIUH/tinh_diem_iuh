@@ -47,6 +47,7 @@ h5 {
 button {
     font-size: 1.2vw;
     margin-top: 20px;
+    padding: 0 !important;
 }
 
 #result {

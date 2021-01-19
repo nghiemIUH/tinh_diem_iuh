@@ -18,7 +18,6 @@ class ViewMonHoc(APIView):
 
     def post(self, request):
         data = request.data
-        print(data)
         ten = data['ten']
         thuc_hanh = 'on' == data['thuc_hanh']
         tong_chi = int(data['tong_chi'])
